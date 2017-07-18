@@ -129,3 +129,29 @@ Add the following flag to your Java invocation:
 A Debian binary package is created as part of the build process and it can
 be used to install an executable into `/usr/bin/jmx_exporter` with configuration
 in `/etc/jmx_exporter/jmx_exporter.yaml`.
+
+## Docker
+
+The jmx exporter can be run as a 'side-car' container along with the jmx exposing service. For example, if you're running Kafka in a Docker container, with flags that expose the broker's jmx metrics, such as:
+
+```
+-Dcom.sun.management.jmxremote \
+-Dcom.sun.management.jmxremote.authenticate=false \
+-Dcom.sun.management.jmxremote.ssl=false \
+-Dcom.sun.management.jmxremote.local.only=false \
+-Djava.rmi.server.hostname=kafka \
+-Dcom.sun.management.jmxremote.rmi.port=1099"
+```
+
+To export the broker metrics, run the following docker-run command:
+
+```
+docker run --rm -it \
+           --name kafka_jmx_exporter \                       # important! if using docker network
+           -e BIND_HOST=kafka_jmx_exporter \                 # same as name if using docker network
+           -e BIND_PORT=39390 \                              # port for metrics web service on http://BIND_HOST:BIND_PORT/metrics
+           -p 39391:39390 \                                  # extra port mapping to allow multi tenency of exporters
+           -v YOUR_PATH/your_config.yml:/tmp/jmx_exporter \  # exporter yaml file for kafka (in this example)
+           --network YOUR_KAFKA_NETWORK \                    # important! if using docker network
+           amimimor/jmx_exporter:0.10-SNAPSHOT               # tag is based on jmx_exporter maven release version
+```
