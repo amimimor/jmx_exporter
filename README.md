@@ -153,5 +153,5 @@ docker run --rm -it \
            -p 39391:39390 \                                  # extra port mapping to allow multi tenency of exporters
            -v YOUR_PATH/your_config.yml:/tmp/jmx_exporter \  # exporter yaml file for kafka (in this example)
            --network YOUR_KAFKA_NETWORK \                    # important! if using docker network
-           shinedev/jmx-prometheus:0.10-SNAPSHOT               # tag is based on jmx_exporter maven release version
+           amimimor/jmx-prometheus:0.10-SNAPSHOT               # tag is based on jmx_exporter maven release version
 ```
