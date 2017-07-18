@@ -11,7 +11,7 @@ echo BINDING TO HOST:PORT $BIND_HOST_PORT
 
 CONFIG_FILE_DIR=${CONFIG_FILE_DIR:-/tmp/jmx_exporter.yml}
 echo GOING TO USE $CONFIG_FILE_DIR AS INPUT CONFIG 
-echo THERFORE IT NEEDS TO BE MOUNTED FROM THE HOST (-v YOUR_PATH/your_config.yml:/tmp/jmx_exporter.yml)
+printf "THEREFORE IT NEEDS TO BE MOUNTED FROM THE HOST (-v YOUR_PATH/your_config.yml:/tmp/jmx_exporter.yml)"
 
 VERSION=$JMX_PROMETHEUS_VERSION
 echo using jar jmx_prometheus_httpserver-${VERSION}-jar-with-dependencies.jar
